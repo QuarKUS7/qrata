@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	goqr "github.com/liyue201/goqr"
+	qrata "github.com/quarkus7/qrata/qrata"
 	qrcode "github.com/skip2/go-qrcode"
 	"image"
 	"io"
@@ -21,37 +22,15 @@ func main() {
 	inputObject := flag.String("input", "", "path to object to be qraeted")
 	flag.Parse()
 
-	dir := createTmpDir()
-	print(dir + "\n")
-
 	file, err := os.Open(*inputObject)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
 
-	buf := make([]byte, 1024) // define your buffer size here.
-
-	part := 0
-
-	for {
-		n, err := file.Read(buf)
-		part += 1
-
-		if n > 0 {
-			partPath := fmt.Sprintf("%s/%d.png", dir, part)
-
-			makeQrcode(buf, partPath)
-		}
-
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			log.Printf("read %d bytes: %v", n, err)
-			break
-		}
-
+	err = qrata.Enqrata(file)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	makeVideo(dir)

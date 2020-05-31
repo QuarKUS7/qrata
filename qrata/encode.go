@@ -28,6 +28,8 @@ func Enqrata(file *File) error {
 	}
 
 	makeVideo(dir)
+
+	os.RemoveAll(dir)
 }
 
 func makeQrcode(data []byte, tempName string) error {
