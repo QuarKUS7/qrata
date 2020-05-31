@@ -5,7 +5,7 @@ import (
 	"flag"
 	"fmt"
 	goqr "github.com/liyue201/goqr"
-	qrata "github.com/quarkus7/qrata/qrata"
+	qrata "github.com/quarkus7/qrata"
 	qrcode "github.com/skip2/go-qrcode"
 	"image"
 	"io"
